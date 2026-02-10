@@ -54,17 +54,20 @@
       display: none;
     }
 
-    /* Hearts */
-    .heart {
+    /* Hearts, kisses, broken hearts */
+    .heart, .kiss, .broken {
       position: absolute;
       font-size: 25px;
-      color: rgba(255, 255, 255, 0.8);
-      animation: floatUp 6s linear infinite;
+      animation: floatUp 5s linear forwards;
     }
 
+    .heart { color: rgba(255, 0, 102, 0.8); }
+    .kiss { color: rgba(255, 102, 178, 0.9); }
+    .broken { color: rgba(255, 255, 255, 0.8); }
+
     @keyframes floatUp {
-      from { transform: translateY(100vh); opacity: 1; }
-      to { transform: translateY(-10vh); opacity: 0; }
+      from { transform: translateY(100vh) scale(1); opacity: 1; }
+      to { transform: translateY(-10vh) scale(1.2); opacity: 0; }
     }
 
     /* Fireworks */
@@ -92,27 +95,18 @@
       to { transform: scale(1.05); }
     }
 
-    #punchEmoji {
-      font-size: 7em;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      animation: punchAnim 0.5s forwards;
-      z-index: 10;
-    }
-
-    @keyframes punchAnim {
-      0% { transform: translate(-50%, -50%) scale(0); }
-      50% { transform: translate(-50%, -50%) scale(1.3); }
-      100% { transform: translate(-50%, -50%) scale(1); }
+    #noText {
+      font-size: 2em;
+      color: #ffe6ec;
+      margin-top: 20px;
     }
 
     @media (max-width: 500px) {
       h1 { font-size: 2em; }
       p { font-size: 1.2em; }
       button { font-size: 1.1em; padding: 14px 30px; }
-      .heart { font-size: 18px; }
+      .heart, .kiss, .broken { font-size: 18px; }
+      #celebrationText, #noText { font-size: 1.5em; }
     }
   </style>
 </head>
@@ -148,8 +142,8 @@
     That's great! Now, plan a romantic dinner date 💖🎆
   </div>
 
-  <div id="punchEmoji" class="hidden">
-    Sorry... This option is not valid. 👊
+  <div id="noText" class="hidden">
+    Sorry… this option is not valid 😌❤️
   </div>
 </div>
 
@@ -168,28 +162,24 @@
   }
 
   function celebrateYes() {
-    document.getElementById("punchEmoji").classList.add("hidden");
+    document.getElementById("noText").classList.add("hidden");
     document.getElementById("celebrationText").classList.remove("hidden");
     playSound(loveSound);
 
     for (let i = 0; i < 30; i++) {
-      setTimeout(createFirework, i * 120);
+      setTimeout(() => createFireworkWithLove(), i * 120);
     }
   }
 
   function celebrateNo() {
     document.getElementById("celebrationText").classList.add("hidden");
-    const punch = document.getElementById("punchEmoji");
-    punch.classList.remove("hidden");
-    // restart animation
-    punch.style.animation = "none";
-    punch.offsetHeight; // trigger reflow
-    punch.style.animation = "punchAnim 0.5s forwards";
+    const noMsg = document.getElementById("noText");
+    noMsg.classList.remove("hidden");
     playSound(punchSound);
 
-    // small punch fireworks
-    for (let i = 0; i < 10; i++) {
-      setTimeout(createFirework, i * 150);
+    // broken hearts floating
+    for (let i = 0; i < 15; i++) {
+      setTimeout(createBrokenHeart, i * 150);
     }
   }
 
@@ -200,23 +190,9 @@
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.animationDuration = (3 + Math.random() * 3) + "s";
     document.body.appendChild(heart);
-
     setTimeout(() => heart.remove(), 6000);
   }
 
-  function createFirework() {
-    const firework = document.createElement("div");
-    firework.className = "firework";
-    firework.style.left = Math.random() * 100 + "vw";
-    firework.style.top = Math.random() * 60 + "vh";
-    firework.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
-    document.body.appendChild(firework);
-
-    setTimeout(() => firework.remove(), 1000);
-  }
-
-  setInterval(createHeart, 300);
-</script>
-
-</body>
-</html>
+  function createKiss() {
+    const kiss = document.createElement("div");
+    kiss.className = "kiss";
