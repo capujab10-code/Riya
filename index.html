@@ -145,11 +145,11 @@
   <button onclick="celebrateNo()">NO 🙈</button>
 
   <div id="celebrationText" class="hidden">
-    That's great! Now, plan a romantic dinner date 💖
+    That's great! Now, plan a romantic dinner date 💖🎆
   </div>
 
   <div id="punchEmoji" class="hidden">
-    Sorry this option is not valid 👊
+    Sorry... This option is not valid. 👊
   </div>
 </div>
 
@@ -207,4 +207,16 @@
   function createFirework() {
     const firework = document.createElement("div");
     firework.className = "firework";
-    firewo
+    firework.style.left = Math.random() * 100 + "vw";
+    firework.style.top = Math.random() * 60 + "vh";
+    firework.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+    document.body.appendChild(firework);
+
+    setTimeout(() => firework.remove(), 1000);
+  }
+
+  setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
