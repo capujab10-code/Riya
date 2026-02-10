@@ -196,3 +196,42 @@
   function createKiss() {
     const kiss = document.createElement("div");
     kiss.className = "kiss";
+    kiss.innerHTML = "💋";
+    kiss.style.left = Math.random() * 100 + "vw";
+    kiss.style.animationDuration = (3 + Math.random() * 3) + "s";
+    document.body.appendChild(kiss);
+    setTimeout(() => kiss.remove(), 6000);
+  }
+
+  function createBrokenHeart() {
+    const broken = document.createElement("div");
+    broken.className = "broken";
+    broken.innerHTML = "💔";
+    broken.style.left = Math.random() * 100 + "vw";
+    broken.style.animationDuration = (3 + Math.random() * 3) + "s";
+    document.body.appendChild(broken);
+    setTimeout(() => broken.remove(), 6000);
+  }
+
+  function createFireworkWithLove() {
+    createFirework();
+    if (Math.random() > 0.4) createHeart();
+    if (Math.random() > 0.6) createKiss();
+  }
+
+  function createFirework() {
+    const firework = document.createElement("div");
+    firework.className = "firework";
+    firework.style.left = Math.random() * 100 + "vw";
+    firework.style.top = Math.random() * 60 + "vh";
+    firework.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+    document.body.appendChild(firework);
+    setTimeout(() => firework.remove(), 1000);
+  }
+
+  // continuous floating hearts & kisses
+  setInterval(() => { createHeart(); createKiss(); }, 400);
+</script>
+
+</body>
+</html>
